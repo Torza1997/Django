@@ -1,5 +1,5 @@
--โปรเจ็คเว็บเขียนดัวย python django  
--เว็บยืมอุปกรณ์ 
--ใช้ CV2 มาช่วยในการ scan QRcode order
--มี ระบบ back-end font-end
+-โปรเจ็คเว็บเขียนดัวย python django<br> 
+-เว็บยืมอุปกรณ์ <br> 
+-ใช้ CV2 มาช่วยในการ scan QRcode order<br> 
+-มี ระบบ back-end font-end<br> 
  
