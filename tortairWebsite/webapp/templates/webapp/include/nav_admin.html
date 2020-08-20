@@ -1,0 +1,83 @@
+<nav2 class="navbar navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% if  user.is_staff == True %}
+                <li class="nav-item ">
+                     <p>&nbsp;&nbsp;<a href = "{% url 'myapp:Allow' %}">รออนุมัติ</a></p>
+                </li>
+                <li class="nav-item ">
+                     <p>&nbsp;&nbsp;<a href = "{% url 'myapp:send_borrow' %}">อนุมัติแล้ว/รอคืน</a></p>
+                </li>
+                <li class="nav-item ">
+                     <p>&nbsp;&nbsp;<a href = "{% url 'myapp:Check_lass_than_date' %}">เลยกำหนดส่งคืน</a></p>
+                </li>
+                <li class="nav-item ">
+                     <p>&nbsp;&nbsp;<a href = "{% url 'myapp:Getname_list' %}">คืนอุปกรณ์แล้ว</a></p>
+                </li>
+                 <li class="nav-item ">
+                     <p>&nbsp;&nbsp;<a href = "{% url 'admin:index' %}">จัดการข้อมูล</a></p>
+                </li>
+                <li class="nav-item ">
+                     <p>&nbsp;&nbsp;<a id = "click_alert" href = "javascript:void(0)">ประกาศ</a></p>
+                </li>
+             {% endif %}
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+        {% if  check_page != 4%}
+            <input class="form-control mr-sm-2" 
+            type="search" 
+            placeholder="Search" 
+            aria-label="Search"
+        {% if check_page == 3 %}
+            name = "search4"
+        {% elif check_page == 2 %}
+            name = "search3"
+        {% else %}
+            name = "search2"
+        {% endif %}
+            >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        {% endif %}
+        </form>
+
+    </div>
+      
+<div class="modal fade" id="exampleModal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ประกาศ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'myapp:Announce' %}" method="post" id ="auto_form2">{% csrf_token %}
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">หัวข้อ:</label>
+            <input type="text" class="form-control" id="recipient-name" name = "head">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">ข้อความ:</label>
+            <textarea class="form-control" id="message-text" name = "body"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success submit_s ">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#click_alert').on('click',function(){
+      $('#exampleModal_3').modal('show')
+  })
+  $(".submit_s" ).on('click',function(){
+      $("#auto_form2").submit();
+  });
+</script>  
+</nav2>
+

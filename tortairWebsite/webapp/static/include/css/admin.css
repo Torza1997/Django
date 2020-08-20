@@ -1,0 +1,23 @@
+#qr{
+    color: black; 
+    font-size:300%;
+}
+.st{
+    font-family: 'Kanit', sans-serif; 
+    background-color: white;
+    color: black;
+}
+.head_h1{
+    font-family: 'Kanit', sans-serif; 
+    text-align: center;
+    position: relative;
+}
+.modal{
+    font-family: 'Kanit', sans-serif;
+}
+.st2{
+    margin-top: 10%;
+    font-family: 'Kanit', sans-serif; 
+    background-color: white;
+    color: black;
+}

@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Admin</title>
+
+        <!--import file-->
+        {% load static %}
+        {% include './include/importCSS.html' %}
+        {% include './include/importJS.html' %}
+
+
+</head>
+{% if user.is_staff == True %}
+<body>
+        <!--import header-->
+        {% include './include/header.html' %}
+        {% include './include/nav_admin.html' %}
+
+        <!--load content-->
+        {% block content %}
+        {% endblock content %}
+
+        <!--import footer-->
+        {% include "./include/footer.html" %}
+        <script src="{% static 'include/js/script.js' %}"></script>
+
+      
+        
+</body>
+{% else %}
+<script>
+        $(document).ready(function(){
+             window.location.href = "{% url 'myapp:borrow' %}";   
+        })
+</script>
+{% endif %}
+</html>

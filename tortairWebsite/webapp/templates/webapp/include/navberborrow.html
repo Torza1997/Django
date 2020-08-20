@@ -1,0 +1,30 @@
+{% if detail.Eqm_ID.Eqm_name|length > 0%}
+{% else %}
+<nav2 class="navbar navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated%}
+                <i class="fas fa-user mt-1" style = "color:white"></i>
+                <li class="nav-item">
+                    <p>&nbsp;{{user.username}}</p>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+            {% if user.is_staff != True and user.is_authenticated %}
+                <p>&nbsp;คุณ: {{user.first_name}}</p>
+             {% elif user.is_staff == True%}
+                <p>&nbsp;Admin: {{user.first_name}}</p>
+             {% endif %}
+              </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" 
+            type="search" 
+            placeholder="Search" 
+            aria-label="Search"
+            name = "search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav2>
+{% endif %}

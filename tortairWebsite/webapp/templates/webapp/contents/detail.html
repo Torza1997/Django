@@ -1,0 +1,145 @@
+{% extends "webapp/borrow.html" %}
+{% load static from staticfiles %}
+{% block content %}
+{% comment %}
+'''for comment'''
+{% endcomment %}
+{% if detail.Eqm_ID.Amount == 0 %}
+    <div  style = "height:300px;">
+    </div>
+{% else %}
+<div class="card card_style">
+    <div class="row row_style">
+        <div class="col-sm-6 col_style1">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{% static detail.Img.url %}" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static detail.Img.url %}"
+                            alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static detail.Img.url %}" alt="Third slide">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-5 col_style2">
+            <h3 class = "top-margin">{{detail.Eqm_ID.Eqm_name}}</h3><br>
+            <p>โมเดล: {{detail.Eqm_ID.Eqm_model}}</p>
+            <p>รหัสอุปกรณ์: {{detail.Eqm_ID.id}}</p>
+            <p>จำนวนที่เหลือยู่: {{detail.Eqm_ID.Amount}}</p>
+            <form id = "myForm" action="{% url 'myapp:Insert_borrow_order'%}" method="post">
+                {% csrf_token %}
+                <p>จำนวน:&nbsp;
+                    <button type="button" class="btn btn-light lower">-</button>
+                    <input id="values" type="text" value="1" style="text-align: center; width: 20%;" name = "Amount">
+                    <button type="button" class="btn btn-light increase">+</button></p>
+                    <p style="position: absolute; margin-top:2%;">วันส่งคืน:</p>
+                    <div class = "container md-5" style = "width: 200px">
+                        <div class = "input-group">
+                            <div class = "input-group-prepend">
+                                <button type="button" id = "toggle" class = "input-group-text"><i class = "fa fa-calendar-alt"></i></button>
+                            </div>
+                            <input type = "text" id = "picker" class = "form-control" name = "dates">
+                            <input type="hidden"  name="ID" value={{detail.Eqm_ID.id}}>
+                            <input type="hidden"  name="username" value="{{user.username}}">
+                        </div>
+                    </div>
+            </form>
+             <input type="button" id = "submits_2" class="button button-black" value="ยืมอุปกรณ์">
+        </div>
+    </div>
+</div>
+<div class="card card_style2">
+    <div class="row row_style">
+        <div class="col-sm-12 col_style3">
+            <h3>รายละเอียดอุปกรณ์</h3>
+            <p>{{detail.Detail|linebreaks}}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">แจ้งเตือน</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        {% if detail.Eqm_ID.Amount == 0 %}
+        <div class="modal-body">
+        อุปกรณ์หมด
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-success" onclick="window.location.href='{% url 'myapp:borrow'%}'">กลับ</button>
+      </div>
+        {% else %}
+      <div class="modal-body">
+        กรุณายืนยันอีกครั้ง
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-success ok">ตกลง</button>
+      </div>
+       {% endif %}
+    </div>
+  </div>
+</div>
+{% if detail.Eqm_ID.Amount == 0 %}
+    <script>$('#exampleModal3').modal({backdrop: 'static', keyboard: false})</script>
+{% endif %}
+<script>
+    var Get_value = document.getElementById('values');
+    var $value = parseInt(Get_value.value);
+    $('.btn-light.increase').click(function () {
+        if($value < parseInt('{{detail.Eqm_ID.Amount}}')){
+            $value = $value + 1;
+            Get_value.setAttribute('value', $value);
+            Get_value.value = $value;
+        }
+    });
+    $('.btn-light.lower').click(function () {
+        if ($value > 1) {
+            $value = $value - 1;
+            Get_value.setAttribute('value', $value);
+            Get_value.value = $value;
+        } else {
+            Get_value.setAttribute('value', 1);
+            Get_value.value = $value;
+        }
+    });
+    $("#values").on('change', function values() {
+        $value = parseInt(Get_value.value)
+        if (isNaN($value) || $value ==0) {
+            $value = 1;
+            Get_value.setAttribute('value', $value);
+            Get_value.value = $value;
+        }else{
+                if($value < parseInt('{{detail.Eqm_ID.Amount}}')){
+                    Get_value.setAttribute('value', $value);
+                    Get_value.value = $value;
+                }else{
+                    $value = parseInt('{{detail.Eqm_ID.Amount}}');
+                    Get_value.setAttribute('value', $value);
+                    Get_value.value = $value;
+            }
+        }
+    });
+    $('#submits_2').on('click',function(){
+        $('#exampleModal3').modal('show')
+    })
+</script>
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends "webapp/borrow.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container1">
+        {% if data|length == 0 %}
+                <center><h1 style = "font-family: 'Kanit', sans-serif;">ไม่มีอุปกรณฒที่คุณค้นหา</h1></center>
+        {% endif %}
+        <br><br><br><br><br>
+        <div class="row" id="row_style">
+                {% for vals in data%}
+                <div class="col-sm-3" id="col_style">
+                        <div class="card">
+                                <div class="card-body">
+                                        <img id = "setSrc" src="{% static vals.Img.url %}" class="card-img-top"
+                                                alt="img">
+                                        <p class="card-text"> {{vals.Eqm_ID.Eqm_name}}</p>
+                                        <p class="card-text"> {{vals.Eqm_ID.Eqm_model}}</p>
+                                        <p class="card-text">
+                                        
+                                                <div class="progress">
+                                                        {% if vals.Eqm_ID.Amount < 11 %}
+                                                                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                                                                 aria-valuenow="25" aria-valuemin="0" style="width: {{vals.Eqm_ID.Amount}}%"aria-valuemax="100">
+                                                                </div>
+                                                        {% elif vals.Eqm_ID.Amount < 21 %}
+                                                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" 
+                                                                aria-valuenow="25" aria-valuemin="0" style="width: {{vals.Eqm_ID.Amount}}%"aria-valuemax="100">
+                                                                </div>
+                                                        {% else %}
+                                                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" 
+                                                                aria-valuenow="25" aria-valuemin="0" style="width: {{vals.Eqm_ID.Amount}}%"aria-valuemax="100">
+                                                                </div>
+                                                        {% endif %}
+                                                        <p class="p{{vals.Eqm_ID.id}}" style="position: absolute; margin-left: 27%;">เหลืออยู่ {{vals.Eqm_ID.Amount}}/100</p>
+                                                </div>
+                                        </p>
+                                        <a href="{% url 'myapp:detail' vals.id %}"
+                                                class="button button-red">ยืมอุปกรณ์</a>
+                                </div>
+                        </div>
+                </div>
+                {% endfor %}
+        </div>
+</div>
+<nav3>
+        <ul class="pagination justify-content-center">
+                {% if data.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                <li class="page-item "><a class="page-link" href="?page={{data.previous_page_number}}">Previous</a></li>
+                {% endif %}
+                {% for page in num_page %}
+                        {% if page == data.number%}
+                                <li class="page-item active"><a class="page-link"href="?page={{page}}">{{page}}</a></li>
+                        {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                        {% endif %}
+                {% endfor %}
+                {% if data.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{data.next_page_number}}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{data.paginator.num_pages}}">Last</a></li>
+                {% endif %}
+        </ul>
+</nav3>
+{% endblock content %}

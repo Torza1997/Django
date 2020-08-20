@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>BORROW</title>
+
+        <!--import file-->
+        {% load static %}
+        {% include './include/importJS.html' %}
+        {% include './include/importCSS.html' %}
+
+
+</head>
+
+<body>
+        <!--import header-->
+        {% include './include/header.html' %}
+        {% include './include/navberborrow.html' %}
+
+        <!--load content-->
+        {% block content %}
+        {% endblock content %}
+
+        <!--import footer-->
+        {% include "./include/footer.html" %}
+        <script src="{% static 'include/js/script.js' %}"></script>
+
+      
+        
+</body>
+
+</html>

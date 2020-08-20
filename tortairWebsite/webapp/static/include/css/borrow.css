@@ -1,0 +1,121 @@
+html{
+    font-family:"Roboto Cn",sans-serif;
+}
+.button-red,header ul a ,footer{
+    font-family: 'Kanit', sans-serif; 
+}
+.col_style2,.col_style3{
+    font-size:120%;
+    font-family: 'Kanit', sans-serif; 
+}
+body{
+    background: rgb(241, 241, 241);
+    overflow-x: hidden;
+}
+.container1{
+    margin: auto;
+    margin-top:4%;
+    width: 75%;
+    height: 100%;
+    background: white;
+}
+#row_style{
+    margin: auto;
+    margin-top:-10%;
+    width: 100%;
+    text-align: center;
+}
+#col_style{
+    margin-bottom: 1%;
+}
+.card_style{
+    position: relative;
+    margin: auto;
+    margin-top: 8%;
+    width: 65%;
+}
+.card_style2{
+    position: relative;
+    margin: auto;
+    margin-top: 3%;
+    width: 65%;
+}
+.top-margin{
+    margin-top: 4%;  
+  }
+.row_style{
+    margin: 2%;
+}
+.col_style1{
+    padding: 0%;
+}
+.col_style2{
+    margin: 0.3%;
+    margin-left: 5%;
+}
+.col_style3{
+    margin: 0.5%;
+    
+}
+.button-red{
+    background-color:rgb(35, 168, 86);
+    border: none;
+    color: white;
+    padding: 10% 15%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    margin: 1% 1%;
+    cursor: pointer;
+  }
+  .button-black{
+    background-color:rgb(35, 168, 86);
+    border: none;
+    color: white;
+    padding: 5% 10%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    margin: 1% 1%;
+    cursor: pointer;
+    margin-left:20%; 
+    margin-top:10%;
+  }
+
+.button-red::before,
+.button-red::after{
+    content:'';
+    position: absolute;
+    width:100%;
+    height: 2px;
+    background-color: rgb(12, 240, 4);
+    left: 0;
+    transform: scaleX(0);
+    transition: all .5s;
+}
+
+.button-red::before{
+    top: 0;
+    transform-origin: left;
+}
+
+.button-red::after{
+    bottom: 0;
+    transform-origin: right;
+}
+.button-red:hover::before,
+.button-red:hover::after{
+    transform: scaleX(1);
+}
+.button-red:hover,.button-black:hover {
+    background-color: rgb(12, 240, 4);
+    color: #000000;
+}
+nav3 ul{
+    margin: auto;
+    width: 50%;
+    margin-top: 3%;
+}
+

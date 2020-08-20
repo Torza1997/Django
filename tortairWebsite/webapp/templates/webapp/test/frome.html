@@ -1,0 +1,9 @@
+{% extends 'webapp/test/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{from|crispy}}
+    <button type="submit" class="btn btn-success">Ok</button>
+  </form>
+{% endblock %}

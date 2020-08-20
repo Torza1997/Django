@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'webapp/new.html' %}
+{% load static from staticfiles %}
+{% block content %}
+         <div class="modal fade bd-example-modal-lg Mymodel"  style = "font-family: 'Kanit', sans-serif;" >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                     <div style = "text-align:center">
+                        <p><img src="{% static 'include/Qrcode/borrowQR.jpg'%}" alt="QRcode" width="500" height="500"/></p>
+                        <a style ="color:green" id = "hide_popup" href = "{% static 'include/Qrcode/borrowQR.jpg'%}" download>DOWLOAD</a>
+                        &nbsp;<a style ="color:green" id = "hide_popup" href = "{% url 'myapp:borrow'%}">กลับ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  style = "height:270px;"></div>
+{% endblock content %}
+
+    
+
+   

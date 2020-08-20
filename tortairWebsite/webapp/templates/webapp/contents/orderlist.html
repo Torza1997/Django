@@ -1,0 +1,103 @@
+{% extends 'webapp/base_order.html' %}
+{% block content %}
+
+<style>
+    .button3{
+        color: white;
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        background-color: #f44336;
+        font-family: 'Kanit', sans-serif;
+         
+    }
+    .button2{
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        background-color: #f44336;
+        font-family: 'Kanit', sans-serif;
+         
+    }
+    .style_231{
+        width:10%;
+    }
+    h2{
+        font-family: 'Kanit', sans-serif;
+    }
+</style>
+   
+    <div class = " container st2">
+        {% if massege != '' %}
+            {% if check_s == 1 %}
+             <div class="alert alert-danger " role="alert">
+                {{massege}}
+            </div>
+            {% elif check_s == 0 %}
+                <div class="alert alert-success " role="alert">
+                    {{massege}}
+                </div>
+            {% endif %}
+
+        {% endif %}
+        <table  class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">อุปกรณ์ที่</th>
+            <th scope="col">จำนวนที่ยืม</th>
+            <th scope="col">วันที่ยืม</th>
+            <th scope="col">วันที่คืน</th>
+            <th scope="col">ลบ</th>
+            </tr>
+        </thead>
+        <tbody>
+        <script> 
+            var i = 1
+        </script>
+        {% for data in datas %}
+            <tr>
+            <th scope="row"><script>document.write(i);</script></th>
+            <td>{{data.Eqm_name.Eqm_name}}</td>
+            <td>
+                <form action="{% url 'myapp:Update_amount' user.username %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden"  name="ID" value="{{data.id}}">
+                    <input class = "style_231" type="text"  name="update_mount" value="{{data.Get_Amount}}">
+                    <input class="button2" type="submit" value="Update">
+                </form> 
+            </td>
+            <td>{{data.date_br}}</td>
+            <td>{{data.Date_repatriate}}</td>
+            <td>
+                <form action="{% url 'myapp:Delete' user.username %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden"  name="ID" value="{{data.id}}">
+                    <input class="button2" type="submit" value="ลบ">
+                </form> 
+            </td>
+            </tr>
+        <script>i++;</script>
+        {% endfor %}
+        </tbody>
+        </table>
+        <center><h2>{{massage}}</h2></center>
+    </div>
+   
+    <form action="{% url 'myapp:insert_borrow' %}" method="post">
+         {% csrf_token %}
+        <input type="hidden"  name="username" value="{{user.username}}">
+        <center><input class="button3" type="submit" value="ยืนยันการยืมทั้งหมด"></center>
+    </form> 
+{% endblock %}

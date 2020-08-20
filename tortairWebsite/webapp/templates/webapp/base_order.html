@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Admin</title>
+
+        <!--import file-->
+        {% load static %}
+        {% include './include/importCSS.html' %}
+        {% include './include/importJS.html' %}
+
+
+</head>
+<body>
+        <!--import header-->
+        {% include './include/header.html' %}
+
+        <!--load content-->
+        
+        {% if user.is_authenticated %}
+            {% block content %}
+            {% endblock content %}
+        {% endif %}
+
+        <!--import footer-->
+        {% include "./include/footer.html" %}
+        <script src="{% static 'include/js/script.js' %}"></script> 
+        
+</body>
+</html>

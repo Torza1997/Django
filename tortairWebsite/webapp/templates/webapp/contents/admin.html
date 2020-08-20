@@ -1,0 +1,121 @@
+{% extends 'webapp/base_admin.html' %}
+{% block content %}
+
+<div class = " container mt-5 st">
+<br>
+
+{% if check_page == 2 %}
+    <h1 class = "head_h1">อนุมัติแล้ว/รอคืน</h1>
+    <p><a href = "{% url 'myapp:ScanQrcode_send' %}"><i id = "qr"  class="fas fa-qrcode"></i></a>&nbsp;&nbsp;สแกนคิวอาร์โค้ด(Scan qrcode)</p>
+{% elif  check_page == 1%}
+    <h1 class = "head_h1">รอการอนุมัติ</h1>
+    <p><a href = "{% url 'myapp:ScanQrcode_borrow' %}"><i id = "qr"  class="fas fa-qrcode"></i></a>&nbsp;&nbsp;สแกนคิวอาร์โค้ด(Scan qrcode)</p>
+{% elif check_page == 3 %}
+    <h1 class = "head_h1">เลยกำหนดส่งคืน</h1>
+{% elif check_page == 4 %}
+    <h1 class = "head_h1">คืนอุปกรณ์แล้ว</h1>
+{% endif %}
+
+<br>
+{% if check == 1 %}
+ <div class="modal fade bd-example-modal-lg Mymodel mt-5"  style = "font-family: 'Kanit', sans-serif;" >
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            {% if check_page == 2 %}
+            <button type="button" class="btn btn-warning" onclick ="window.location.href='{% url 'myapp:send_borrow'%}'">กลับ</button>
+            {% elif check_page == 3 %}
+            <button type="button" class="btn btn-danger" onclick ="window.location.href='{% url 'myapp:send_borrow'%}'">กลับ</button>
+            {% else %}
+            <button type="button" class="btn btn-success" onclick ="window.location.href='{% url 'myapp:Allow'%}'">กลับ</button>
+            {% endif %}
+                <div style = "text-align:center">
+                    {% endif %}
+                    <table class="table table-hover table-light" id = "myTable">
+                        <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ชื่อ</th>
+                                <th scope="col">นามสกุล</th>
+                                <th scope="col">อุปกรณ์ที่ยืม</th>
+                                <th scope="col">จำนวนที่ยืม/อัน</th>
+                                <th scope="col">วันที่ยืม</th>
+                                <th scope="col">วันที่คืน</th>
+                                <th scope="col">รหัสคิวอาร์โค้ด</th>
+                                {% if check_page == 3 or check_page == 2 or check_page == 1 %}
+                                    <th scope="col">อนุมัติ</th>
+                                {% endif %}
+                                </tr>
+                        </thead>
+                        <tbody>
+                             <script> 
+                                 var i = 1
+                             </script>
+                            {% for data in datas %}
+                                <tr>
+                                <th scope="row">
+                                    <script>
+                                        document.write(i);
+                                    </script>
+                                </th>
+                                <td>{{data.First_name}}</td>
+                                <td>{{data.Last_name}}</td>
+                                <td>{{data.Eqm_name}}</td>
+                                <td>{{data.Get_Amount}}</td>
+                                <td>{{data.date_br}}</td>
+                                <td>{{data.Date_repatriate}}</td>
+                                <td>{{data.Br_code}}</td>
+
+                                {% if data.Status_borrow == 1 and data.Status_repatriate == 0 and check_page != 3 %}
+                                    <td><button  id = "send{{data.id}}" type="button" class="btn btn-warning">คืนอุปกรณ์</button></td>
+                                {% elif data.Status_borrow == 0 and data.Status_repatriate == 0 %}
+                                    <td><button  id = "allow{{data.id}}" type="button" class="btn btn-success">อนุมัติ</button></td>
+                                {% elif data.Status_borrow == 1 and data.Status_repatriate == 0 and check_page == 3 %}
+                                    <td><button  id = "send{{data.id}}" type="button" class="btn btn-danger">คืนอุปกรณ์</button></td>
+                                {% endif %}
+                                
+                                </tr>
+                                
+                                <script>
+
+                                    i++;
+                                    var token = '{{csrf_token}}';
+
+                                    $('#allow{{data.id}}').on('click',function(event){
+                                    $(this).closest ('tr').remove ();
+                                    $.ajax({
+                                            headers: { "X-CSRFToken": token },
+                                            url: "Update_Status_borrow",
+                                            type: "post",
+                                            data: {'status': 1,'id':'{{data.id}}'},
+                                            success:function(){
+                                                   
+                                                }
+                                            });
+                                        });
+
+                                    $('#send{{data.id}}').on('click',function(event){
+                                    $(this).closest ('tr').remove ();
+                                    $.ajax({
+                                            headers: { "X-CSRFToken": token },
+                                            url: "Update_Status_send",
+                                            type: "post",
+                                            data: {'status': 1,'id':'{{data.id}}'},
+                                            success:function(){
+                                                   
+                                                }
+                                            });
+                                        });
+                                </script>
+                            {% endfor %}
+                        </tbody>
+                     </table> 
+{% if check == 1 %}
+                </div>
+            </div>
+        </div>
+    </div>
+<br><br><br>
+<br><br><br>
+{% endif %}
+</div>
+{% endblock content %}

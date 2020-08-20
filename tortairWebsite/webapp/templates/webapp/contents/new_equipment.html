@@ -1,0 +1,63 @@
+{% extends 'webapp/new.html' %}
+{% load static %}
+{% block content %}
+
+ <div class="container margins">
+  {% if messages %}
+                {% for message in messages %}
+                        <div class = "alert-{{message.tags}}">
+                                {{message}}
+                        </div>
+                {% endfor %}
+        {% endif %}
+    <div class="row style_row">
+
+      <div class="col-lg-2">
+        <div class="navbar-nav style_s">
+          <a href="{% url 'myapp:new' %}" class="list-group-item nounderline">อัพเดทล่าสุด</a>
+          <a href="{% url 'myapp:Feth_announce' %}" class="list-group-item nounderline">ประกาศ</a>
+        </div>
+      </div>
+
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-7 style_col">
+      {% if page_news == 1 %}
+          {% for vals in news_ss%}
+             <div class="card mt-4">
+              <div class="card-body">
+                  <h4> {{vals.head}}</h4>
+                  <p class="card-text">{{vals.body}}</p>
+              </div>
+              </div>
+          {% endfor %}
+      {% else %}
+          {% for vals in data %}
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="{% static vals.Img.url %}"  style = "width:50%; margin:auto"alt="img">
+                <div class="card-body">
+                    <h3 class="card-title">{{vals.Eqm_ID.Eqm_name}}</h3>
+                    <h4>จำนวน {{vals.Eqm_ID.Amount}}</h4>
+                    <p class="card-text">{{vals.Detail|linebreaks}}</p>
+                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                    4.0 stars
+                </div>
+            </div>
+          {% endfor %}
+          
+      {% endif %}
+        
+      </div>
+      <!-- /.col-lg-9 -->
+      <div class="col-lg-3">
+          {% if page_news != 1 %}
+            <div class = "card-body style_s">
+                {% for news in news_f %}
+                  <h4>{{news.head}}</h4>
+                  <p>{{news.body}}</p>
+                {% endfor %}
+            </div>
+          {% endif %}
+         </div>
+    </div>
+  </div>
+{% endblock content %}

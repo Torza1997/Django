@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>NEW Equipment</title>
+        <!--import Css file-->
+        {% load static %}
+        {% include './include/importCSS.html' %}
+
+</head>
+  <!-- header-->
+{% include './include/header.html' %}
+<body>
+      
+        <!--load content-->
+        {% block content %}
+        {% endblock content %}
+        <!-- Footer-->
+       
+</body>
+<!--import js -->
+{% include "./include/footer.html" %}
+
+{% include './include/importJS.html' %}
+<script src="{% static 'include/js/script.js' %}"></script>
+
+</html>
